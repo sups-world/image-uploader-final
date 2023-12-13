@@ -1,3 +1,4 @@
+import { error } from "console";
 import multer from "multer";
 import path from "path";
 
@@ -15,4 +16,24 @@ const storage = multer.diskStorage({
   },
 });
 
-export const upload = multer({ storage: storage });
+export const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, callback) => {
+    // const validMimeTypes = "image";
+    const ext = path.extname(file.originalname);
+    const mime = file.mimetype;
+    // console.log("this is mime:::", mime);
+
+    if (
+      mime !== "image" &&
+      ext !== ".png" &&
+      ext !== ".jpg" &&
+      ext !== ".gif" &&
+      ext !== ".jpeg"
+    ) {
+      return callback(new Error("Only images allowed"));
+      // throw Error;
+    }
+    callback(null, true);
+  },
+});
