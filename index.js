@@ -4,13 +4,20 @@ import { upload } from "./middleware/uploader.js";
 
 const app = express();
 
-app.post("/test/upload", upload.single("image"), (req, res) => {
-  res.send("uploaded successfully");
-});
+//upload.single lai callback ma halera trigger error
+const logoUpload = upload.single("image");
+app.post("/test/upload", (req, res) => {
+  logoUpload(req, res, (err) => {
+    if (err) {
+      // console.log(err);
 
-//buffer ma upload gara
-//buffer ko image lai base64 encode gara=>convert to blob
-//upload blob
+      return res.status(400).send({ error: "invalid file" });
+    }
+    //when no error
+    // console.log("save the file", req.file);
+    return res.send("file uploaded successfully");
+  });
+});
 const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`listening on port:: ${port}`);
