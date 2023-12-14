@@ -10,11 +10,14 @@ app.post("/test/upload", (req, res) => {
   logoUpload(req, res, (err) => {
     if (err) {
       // console.log(err);
-
+      if (err.code === "LIMIT_FILE_SIZE") {
+        return res.status(400).send("file size exceeds maximum limit");
+      }
       return res.status(400).send({ error: "invalid file" });
     }
     //when no error
     // console.log("save the file", req.file);
+    console.log(`here's the file path:::`, req.file.path);
     return res.send("file uploaded successfully");
   });
 });
