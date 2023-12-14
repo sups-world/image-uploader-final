@@ -13,7 +13,8 @@ app.post("/test/upload", (req, res) => {
       if (err.code === "LIMIT_FILE_SIZE") {
         return res.status(400).send("file size exceeds maximum limit");
       }
-      return res.status(400).send({ error: "invalid file" });
+      console.log(err.message);
+      return res.status(400).send({ error: err.message });
     }
     //when no error
     // console.log("save the file", req.file);
@@ -25,3 +26,5 @@ const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`listening on port:: ${port}`);
 });
+
+// just want to merge to main
