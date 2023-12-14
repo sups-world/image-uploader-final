@@ -18,7 +18,8 @@ app.post("/test/upload", (req, res) => {
     }
     //when no error
     // console.log("save the file", req.file);
-    console.log(`here's the file path:::`, req.file.path);
+    // console.log(`here's the file path:::`, req.file.path);
+    console.log("i am here::", req.file.path);
     return res.send("file uploaded successfully");
   });
 });

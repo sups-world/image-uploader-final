@@ -1,7 +1,7 @@
 import multer from "multer";
 import path from "path";
 
-const maxSize = 1024;
+const maxSize = 1024 * 1024 * 10;
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
